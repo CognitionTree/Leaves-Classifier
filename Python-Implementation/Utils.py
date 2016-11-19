@@ -7,6 +7,7 @@ Python Version: 2.7.12
 '''
 
 from math import *
+from numpy import *
 
 
 #---------------------------------------Math Tools---------------------------------------
@@ -59,6 +60,11 @@ def norm(v):
 		norm = norm+ v[dimension]**2
 	
 	return sqrt(norm)
+
+#-------------------------------------Image Processing Tools-----------------------------
+
+
+
 
 #-------------------------------------Feature Extractors---------------------------------
 
