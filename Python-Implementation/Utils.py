@@ -64,14 +64,3 @@ def norm(v):
 #-------------------------------------Image Processing Tools-----------------------------
 
 
-
-
-#-------------------------------------Feature Extractors---------------------------------
-
-#This function extract relevant classification features from an image
-#image is a 2d numpy array
-#returns a vector that contains all the features	
-def feature_extractor1(image):
-	feature_vector = {}
-	#Note: Important to have the dimensions hardcoded in variables somewhere accesible
-	return feature_vector
