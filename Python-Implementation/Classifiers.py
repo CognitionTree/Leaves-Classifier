@@ -31,15 +31,8 @@ class Classifier(object):
 	
 	#TODO: predict(feature_vector) where feature_vector was not in testing_data
 
-'''
-Example for inheriting from Classifier
 
-class Linear_SVM_Classifier(Classifier):
-	def __init__(self, features, categories):
-		super(Linear_SVM_Classifier, self).__init__(features, categories)
-'''
-
-#-------------------------Implement Your Classifiers-----------------------------------
+#-------------------------Implement Classifiers-----------------------------------
 
 #SVM implementation using svm.SVC()
 class SVC_Classifier(Classifier):
@@ -99,11 +92,3 @@ class SVC_Classifier(Classifier):
 		self.clf.set_params(**params)
 		
 		
-# ---------------------------------------------------------------------------------------------------------------------------------------------
-#For testing purposes only:
-svc = SVC_Classifier()
-svc.set_training_data([1,2,4])
-print svc.get_training_data()
-
-
-
