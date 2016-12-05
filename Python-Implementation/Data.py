@@ -7,6 +7,7 @@ class Data:
 		self.predictions = None 
 		self.images_binary = None
 		self.images_color = None
+		self.feature_names = None
 	
 
 	#feature_vectors = [phi(I1), phi(I2),...,phi(In)]
@@ -49,5 +50,12 @@ class Data:
 	
 	def get_images_color(self):
 		return self.images_color
+		
+	def set_feature_names(self, feature_names):
+		self.feature_names = feature_names
+	
+	def get_feature_names(self):
+		return feature_names
+		
 	
 	
