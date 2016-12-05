@@ -131,3 +131,18 @@ def read_kaggle_training_table(table_path):
 	data.set_table_ids(array(ids))
 	
 	return data
+
+#image_path is the path to the image
+#returns the image as a 2D numpy array (Grayscale)
+def read_image_grayscale(image_path):
+	image = cv2.imread(image_path)
+	image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+	
+	return image
+	
+
+#returns the image as a 3D numpy array (RGB)
+def read_image_color(image_path):
+	image = cv2.imread(image_path)
+	
+	return image
