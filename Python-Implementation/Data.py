@@ -75,6 +75,19 @@ class Data:
 
 	def get_length(self):
 		return self.length
+	
+	def __str__(self):
+		string = ''
+		string += 'length: ' + str(self.length) + '\n \n'
+		string += 'table_ids: ' + str(self.table_ids) + '\n \n'
+		string += 'feature_names: ' + str(self.feature_names) + '\n \n'
+		string += 'feature_vectors: ' + str(self.feature_vectors) + '\n \n'
+		string += 'labels: ' + str(self.labels) + '\n \n'
+		string += 'predictions: ' + str(self.predictions) + '\n \n'
+		string += 'images_binary: ' + str(self.images_binary) + '\n \n'
+		string += 'images_color: ' + str(self.images_color) + '\n \n'
+		
+		return string
 
 # ---------------------------Useful functions related to Data ---------------------------
 
