@@ -18,6 +18,13 @@ def test_reading_table():
 	print train_table_data.get_feature_names()
 	print train_table_data.get_labels()
 	print train_table_data.get_table_ids()
+
+def test_read_all_images():
+	data = read_all_kaggle_gray_scale_images(kaggle_images_path)
 	
-test_reading_table()
-	
+	print data.get_table_ids()
+	print data.get_images_binary()[0]
+	print data.get_labels()
+
+#test_reading_table()
+test_read_all_images()	

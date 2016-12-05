@@ -9,11 +9,15 @@ Python Version: 2.7.12
 from math import *
 from numpy import *
 from Data import *
+from glob import *
+import cv2
 
 #---------------------------------------Variables----------------------------------------
 test_kaggle_table = 'Data/Dataset1/data_binary_Kaggle/test.csv'
 
-train_kaggle_table = 'Data/Dataset1/data_binary_Kaggle/train.csv' 
+train_kaggle_table = 'Data/Dataset1/data_binary_Kaggle/train.csv'
+
+kaggle_images_path = 'Data/Dataset1/data_binary_Kaggle' 
 
 
 #---------------------------------------Math Tools---------------------------------------
@@ -146,3 +150,73 @@ def read_image_color(image_path):
 	image = cv2.imread(image_path)
 	
 	return image
+
+#This function reads all kaggle leaves images in grayscale on the provided path
+#It returns a data object that contains images, ids, labels. If no label
+#in the Kaggle train table (which means they belong to Kaggle testing set)
+#their label will be None
+def read_all_kaggle_gray_scale_images(images_directory_path):
+	files = glob(images_directory_path+'/*.jpg')
+	images = []	
+	ids = []
+	labels = []
+	data = Data()
+		
+	
+	#in order to get the labels
+	train_table_data = read_kaggle_training_table(train_kaggle_table)
+
+	for f in files:
+		splited_file_path = f.split('/')
+		file_name = splited_file_path[len(splited_file_path)-1]
+		splited_file_name = file_name.split('.')
+
+		ids.append(splited_file_name[0])
+		images.append(read_image_grayscale(f))
+	
+		labels.append(None)
+
+	table_ids = train_table_data.get_table_ids()
+	table_labels = train_table_data.get_labels()
+
+	for i in range(len(ids)):
+		image_id = ids[i]		
+
+		for j in range(len(table_ids)):
+			if table_ids[j] == image_id:
+				labels[i] = table_labels[j]
+				break
+		
+
+	data.set_images_binary(array(images))
+	data.set_table_ids(array(ids))
+	data.set_labels(array(labels))
+	return data
+
+#This function reads all leaves images in rgb on the provided path
+#It returns a data object with colored images setted
+def read_all_color_images(images_directory_path):
+	files = glob(images_directory_path+'/*.jpg')
+	images = []	
+	data = Data()
+
+	for f in files:
+		images.append(read_image_color(f))
+	
+
+	data.set_images_color(array(images))
+	return data
+
+#This function reads all leaves images in rgb on the provided path
+#It returns a data object with colored images setted
+def read_all_grayscale_images(images_directory_path):
+	files = glob(images_directory_path+'/*.jpg')
+	images = []	
+	data = Data()
+
+	for f in files:
+		images.append(read_image_grayscale(f))
+	
+
+	data.set_images_binary(array(images))
+	return data
