@@ -11,31 +11,28 @@ from numpy import *
 
 
 #---------------------------------------Math Tools---------------------------------------
+#Notice: Since we started using numpy arrays instead of dictionaries to represent vectors
+#		 some of these functions are to simple to even be considered. However since they
+#		 are already done they will remain on the code.
+
 
 #precondition: The 2 vectors have the same dimensions
-#This function calculates the dot product of vectors v1 and v2
-#v1 is a vector represented as a dictionary. {dimension_1_name: value}
-#v2 is a vector represented as a dictionary. {dimension_1_name: value}
+#This function calculates the dot product of vectors v1 and v2. The same index on v1 and
+#v2 represents the same dimension
+#v1 is a vector represented as numpy array.
+#v2 is a vector represented as numpy array.
 #returns a scalar = the value of the dot product
 def dot_product(v1, v2):
-	dot_product_scalar = 0.0
-	
-	for dimension in v1:
-		dot_product_scalar += v1[dimension] * v2[dimension]
-	
-	return dot_product_vector
+	dot_product_scalar = 1.0*sum(v1*v2)
+	return dot_product_scalar
 	
 #precondition: The 2 vectors have the same dimensions
 #This function calculates the sum of vectors v1 and v2
-#v1 is a vector represented as a dictionary. {dimension_1_name: value}
-#v2 is a vector represented as a dictionary. {dimension_1_name: value}
+#v1 is a vector represented as a numpy array.
+#v2 is a vector represented as a numpy array.
 #returns a vector which is the sum of v1 and v2
 def sum_vectors(v1, v2):
-	sum_vector = {}
-	
-	for dimension in v1:
-		sum_vector[dimension] = v1[dimension] + v2[dimension]
-	
+	sum_vector = v1 + v2
 	return sum_vector
 
 #This function multiplies a vector times a constant
@@ -43,23 +40,15 @@ def sum_vectors(v1, v2):
 #c is a constant
 #returns a new vector = c*v
 def scalar_multiplication(v, c):
-	scalar_mult_vector = {}
-	
-	for dimension in v:
-		scalar_mult_vector[dimension] = c * v[dimension]
-	
+	scalar_mult_vector = c*v
 	return scalar_mult_vector		
 
 #This function finds the norm of a vector
 #v is a vector
 #returns the value of the norm of v
 def norm(v):
-	norm = 0.0
-	
-	for dimension in v:
-		norm = norm+ v[dimension]**2
-	
-	return sqrt(norm)
+	norm = sqrt(sum(v**2))
+	return norm
 
 #-------------------------------------Image Processing Tools-----------------------------
 
