@@ -1,33 +1,3 @@
-class Data:
-	#feature_vectors = [phi(I1), phi(I2),...,phi(In)]
-	#labels = [l1,l2,...,ln]
-	def __init__(self):
-		self.feature_vectors = None
-		self.labels = None
-		self.predictions = None 
-		self.images_binaries = None
-		self.images_color = None
-	
-	def set_feature_vectors(self, feature_vector):
-		self.feature_vector = feature_vector
-		
-	
-	def get_feature_vectors(self):
-		return self.feature_vectors
-	
-	def get_labels(self):
-		return self.labels
-	
-	
-	
-	#predictions = [p1, p2, ...., pn]
-	def set_predictions(self, predictions):
-		self.predictions = predictions
-	
-	def get_predictions(self):
-		return self.predictions
-	
-
 
 #Use: train() predict()	
 class Classifier(object):
