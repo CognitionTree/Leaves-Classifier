@@ -1,4 +1,4 @@
-#This file will be the one that will be runned 'python main.py'
+#This file will be used for testing purposes
 from Utils import *
 
 def test_reading_table():
