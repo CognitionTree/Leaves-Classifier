@@ -1,10 +1,32 @@
-#make sure that the names of the feature extractors are self descriptive
+from Data import *
+from Utils import *
+import cv2
+
+#TODO: make sure that the names of the feature extractors are self descriptive
+'''
+General template:
+	Feature extractor receives the image as a numpy array
+	extracts relevant classification features from image
+	returns a tuple containing two numpy arrays:
+		the first including the feature names
+		the seconf including the features corresponding to those names
+'''
+
 class Feature_Extractors:
-	
-	#image is a cv2 array
-	#This function extract relevant classification features from an image
-	#returns a vector that contains all the features	
-	def feature_extractor1(image):
-		feature_vector = []
-		#Note: Important to have the dimensions hardcoded in variables somewhere accesible
-		return feature_vector
+
+	def hu_momments_extractor(self, image):
+		feature_names = array(['hu1', 'hu2','hu3', 'hu4','hu5', 'hu6','hu7'])
+		moments = cv2.moments(image)
+		hu_moments = cv2.HuMoments(moments).flatten()
+		
+		return (feature_names, hu_moments)
+		
+
+#------------------------------For testing purpose only: -----------------------------------
+
+FE = Feature_Extractors()
+image = read_image_grayscale("1.jpg")
+feature_names, hu_moments = FE.hu_momments_extractor(image)
+print feature_names
+print hu_moments
+
