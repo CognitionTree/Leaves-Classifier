@@ -11,11 +11,9 @@ from numpy import *
 from Data import *
 
 #---------------------------------------Variables----------------------------------------
-test_kaggle_table = '/Users/andydanielmartinez/git/Leaves-Classifier/' + \
-					'Python-Implementation/Data/Dataset1/data_binary_Kaggle/test.csv'
+test_kaggle_table = 'Data/Dataset1/data_binary_Kaggle/test.csv'
 
-train_kaggle_table = '/Users/andydanielmartinez/git/Leaves-Classifier/' + \
-					'Python-Implementation/Data/Dataset1/data_binary_Kaggle/train.csv' 
+train_kaggle_table = 'Data/Dataset1/data_binary_Kaggle/train.csv' 
 
 
 #---------------------------------------Math Tools---------------------------------------
@@ -98,13 +96,38 @@ def read_excel_table(table_path):
 def read_kaggle_test_table(table_path):
 	data = Data()
 	feature_vectors = []
+	ids = []
 	(feature_names, feature_vectors_str) = read_excel_table(table_path)
 	
 	for row in feature_vectors_str:
+		ids = ids+row[0:1]
+		row = row[1:len(row)]
 		feature_vectors.append([float(feature) for feature in row])
 	
 	data.set_feature_vectors(array(feature_vectors))
 	data.set_feature_names(array(feature_names))
+	data.set_table_ids(array(ids))
 	
 	return data
+
+#Remember that Column 2 contains the classification of the feature vector
+def read_kaggle_training_table(table_path):
+	data = Data()
+	feature_vectors = []
+	labels = []
+	ids = []
+	(feature_names, feature_vectors_str) = read_excel_table(table_path)
 	
+	for row in feature_vectors_str:
+		labels.append(row[1])
+		ids.append(row[0])
+		row = row[2:len(row)]
+		
+		feature_vectors.append([float(feature) for feature in row])
+	
+	data.set_feature_vectors(array(feature_vectors))
+	data.set_feature_names(array(feature_names))
+	data.set_labels(array(labels))
+	data.set_table_ids(array(ids))
+	
+	return data

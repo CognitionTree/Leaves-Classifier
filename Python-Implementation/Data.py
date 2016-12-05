@@ -8,6 +8,7 @@ class Data:
 		self.images_binary = None
 		self.images_color = None
 		self.feature_names = None
+		self.table_ids = None
 	
 
 	#feature_vectors = [phi(I1), phi(I2),...,phi(In)]
@@ -58,5 +59,10 @@ class Data:
 	def get_feature_names(self):
 		return self.feature_names
 		
+	def set_table_ids(self, table_ids):
+		self.table_ids = table_ids
+	
+	def get_table_ids(self):
+		return self.table_ids
 	
 	
