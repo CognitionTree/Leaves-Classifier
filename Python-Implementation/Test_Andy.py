@@ -1,5 +1,8 @@
 #This file will be used for testing purposes
 from Utils import *
+from Data import *
+from FeatureExtractors import *
+from Classifiers import *
 
 def test_reading_table():
 	test_table_data = read_kaggle_test_table(test_kaggle_table)
