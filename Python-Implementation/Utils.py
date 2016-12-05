@@ -8,6 +8,14 @@ Python Version: 2.7.12
 
 from math import *
 from numpy import *
+from Data import *
+
+#---------------------------------------Variables----------------------------------------
+test_kaggle_table = '/Users/andydanielmartinez/git/Leaves-Classifier/' + \
+					'Python-Implementation/Data/Dataset1/data_binary_Kaggle/test.csv'
+
+train_kaggle_table = '/Users/andydanielmartinez/git/Leaves-Classifier/' + \
+					'Python-Implementation/Data/Dataset1/data_binary_Kaggle/train.csv' 
 
 
 #---------------------------------------Math Tools---------------------------------------
@@ -53,3 +61,50 @@ def norm(v):
 #-------------------------------------Image Processing Tools-----------------------------
 
 
+
+
+
+
+#-------------------------------------File System Processing Tools-----------------------
+
+#table_path is the path to the excel_table
+#return a Data object with feature vectors and labels included
+def read_excel_table(table_path):
+	#feature_names = []
+	#feature_vectors = []
+	#data = Data()
+	headers = []
+	rows = []
+	
+	f = open(table_path, 'r')
+	
+	for line in f:
+		line = line.replace('\n', '')
+		splited_line = line.split(',')
+	
+		if len(headers) == 0:
+			headers = splited_line
+		else:
+			#feature_vectors.append([float(feature) for feature in splited_line])
+			rows.append(splited_line)
+	
+	f.close()
+	
+	#data.set_feature_vectors(array(feature_vectors))
+	#data.set_feature_names(array(feature_names))
+	
+	return (headers, rows)
+
+def read_kaggle_test_table(table_path):
+	data = Data()
+	feature_vectors = []
+	(feature_names, feature_vectors_str) = read_excel_table(table_path)
+	
+	for row in feature_vectors_str:
+		feature_vectors.append([float(feature) for feature in row])
+	
+	data.set_feature_vectors(array(feature_vectors))
+	data.set_feature_names(array(feature_names))
+	
+	return data
+	

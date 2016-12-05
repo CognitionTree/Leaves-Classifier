@@ -11,8 +11,8 @@ class Data:
 	
 
 	#feature_vectors = [phi(I1), phi(I2),...,phi(In)]
-	def set_feature_vectors(self, feature_vector):
-		self.feature_vector = feature_vector
+	def set_feature_vectors(self, feature_vectors):
+		self.feature_vectors = feature_vectors
 	
 	def get_feature_vectors(self):
 		return self.feature_vectors
@@ -50,12 +50,13 @@ class Data:
 	
 	def get_images_color(self):
 		return self.images_color
-		
+	
+	#feature names = [feature_1_name_str, feature_2_name_str, ...]	
 	def set_feature_names(self, feature_names):
 		self.feature_names = feature_names
 	
 	def get_feature_names(self):
-		return feature_names
+		return self.feature_names
 		
 	
 	
