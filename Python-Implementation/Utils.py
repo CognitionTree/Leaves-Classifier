@@ -22,6 +22,9 @@ kaggle_images_path = 'Data/Dataset1/data_binary_Kaggle'
 
 sample_binary_image = 'Data/Dataset1/data_binary_Kaggle/370.jpg'
 
+sample_color_image_1 = 'Data/Google_Images/1.jpg'
+sample_color_image_2 = 'Data/Google_Images/2.jpg'
+sample_color_image_3 = 'Data/Google_Images/3.jpg'
 
 label_to_number = {'Populus_Nigra': 69, 'Acer_Saccharinum': 41, 'Quercus_Pontica': 12, \
 'Alnus_Viridis': 86, 'Olea_Europaea': 88, 'Acer_Rufinerve': 58, 'Acer_Rubrum': 79, \
@@ -123,8 +126,27 @@ def get_corner_points(img, maxFeat):
 	for point in corners:
 		x, y = point.ravel()
 	'''
+
+#make sure that img was read as a grayscale image
+def get_binary_image(img):
+	img = cv2.medianBlur(img,5)
+	#ret,th1 = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
+	return cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,11,2)
 	
 
+def get_binary_image_contours(image):
+	image = cv2.adaptiveThreshold(image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 45, 0)    
+
+	# Perform morphology
+	se = ones((7,7), dtype='uint8')
+	image_close = cv2.morphologyEx(image, cv2.MORPH_CLOSE, se)
+
+	# Your code now applied to the closed image
+	cnt = cv2.findContours(image_close, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)[0]
+	mask = zeros(image.shape[:2], uint8)
+	cv2.drawContours(mask, cnt, -1, 255, -1)
+	
+	return mask
 
 #-------------------------------------File System Processing Tools-----------------------
 

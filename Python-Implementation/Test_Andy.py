@@ -36,6 +36,18 @@ def test_edge_detector():
 	#set_printoptions(threshold=nan)
 	print get_edge_points(read_image_grayscale(sample_binary_image))
 
-test_reading_table()
+def test_binary_countours():
+	#set_printoptions(threshold=nan)
+	#display_image(get_binary_image(read_image_grayscale(sample_color_image)))
+	display_image(get_binary_image_contours(read_image_grayscale(sample_color_image_3)))
+
+def test_binary():
+	#set_printoptions(threshold=nan)
+	#display_image(get_binary_image(read_image_grayscale(sample_color_image)))
+	display_image(get_binary_image(read_image_grayscale(sample_color_image_3)))
+
+#test_reading_table()
 #test_read_all_images()
-#test_edge_detector()	
+#test_edge_detector()
+test_binary()
+test_binary_countours()	
