@@ -12,6 +12,7 @@ from Data import *
 from glob import *
 import cv2
 from PIL import Image
+from sys import*
 
 #---------------------------------------Variables----------------------------------------
 test_kaggle_table = 'Data/Dataset1/data_binary_Kaggle/test.csv'
@@ -110,6 +111,42 @@ def norm(v):
 	return norm
 
 #-------------------------------------Image Processing Tools-----------------------------
+
+def max_x_diff(img):
+	edge_points = get_edge_points(img)
+
+	min_x = maxint
+	max_x = -1
+
+	for point in edge_points:
+		x = point[0]
+		
+		if x > max_x:
+			max_x = x
+		if x < min_x:
+			min_x = x
+
+	x_diff = 1.0*max_x - min_x
+	return x_diff
+
+def max_y_diff(img):
+	edge_points = get_edge_points(img)
+
+	min_y = maxint
+	max_y = -1
+
+	for point in edge_points:
+		y = point[1]
+		
+		if y > max_y:
+			max_y = y
+		if y < min_y:
+			min_y = y
+
+	y_diff = 1.0*max_y - min_y
+	return y_diff
+
+
 
 def display_image(img):
 	cv2.imshow('Image', img)

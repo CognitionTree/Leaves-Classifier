@@ -1,7 +1,6 @@
 from Data import *
 from Utils import *
 import cv2
-from sys import *
 
 #TODO: make sure that the names of the feature extractors are self descriptive
 '''
@@ -30,33 +29,10 @@ class Feature_Extractors:
 		return (feature_names, features)
 
 	def length_width_ratio_feature_extractor(self, image):
-		edge_points = get_edge_points(image)
 		ratio = 0
-
-		min_x = maxint
-		min_y = maxint
-
-		max_x = -1
-		max_y = -1
-
-		for point in edge_points:
-			x = point[0]
-			y = point[1]
-			
-			if x > max_x:
-				max_x = x
-
-			if x < min_x:
-				min_x = x
-
-			if y > max_y:
-				max_y = y
-
-			if y < min_y:
-				min_y = y
-
-		x_diff = 1.0*max_x - min_x
-		y_diff = 1.0*max_y - min_y
+		
+		x_diff = max_x_diff(image)
+		y_diff = max_y_diff(image)
 
 		
 		if y_diff > x_diff:
