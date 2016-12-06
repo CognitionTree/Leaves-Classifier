@@ -73,9 +73,11 @@ def classifying_data_SVC():
 	clf.train()
 	clf.predict()
 	
-	#predictions = D_testing.get_predictions()
+	predictions = D_testing.get_predictions()
 	
-	S = Statistics(D_testing)
+	for i in range(len(labels_testing)):
+		print labels_testing[i], "------------------------", predictions[i]
+	S = Statistics(D_testing, label_to_number)
 	
 	#print "matrix: "
 	#print S.get_confusion_matrix()
@@ -88,7 +90,10 @@ def classifying_data_SVC():
 
 def classifying_data_NN():
 	D = read_kaggle_training_table(train_kaggle_table)
+	print "original length ", D.get_length()
 	D_training, D_testing = split_data(D, 0.80)
+	print "training length ", D_testing.get_length()
+	print "testing length ", D_testing.get_length()
 	
 	feature_vectors_training = D_training.get_feature_vectors()
 	labels_training = D_training.get_labels()
@@ -102,9 +107,7 @@ def classifying_data_NN():
 	clf.train()
 	clf.predict()
 	
-	#predictions = D_testing.get_predictions()
-	
-	S = Statistics(D_testing)
+	S = Statistics(D_testing, label_to_number)
 
 
 def testing_data_features():
@@ -144,9 +147,98 @@ def testing_classifier_hu_moments():
 def testing_get_corner_points():
 	img = read_image_grayscale("1.jpg")
 	corners = get_corner_points(img, 100)
+
+def testing_NN_with_less_features():
+	D = read_kaggle_training_table(train_kaggle_table)
+	D_training, D_testing = split_data(D, 0.80)
 	
+	feature_vectors_training = D_training.get_feature_vectors()
+	labels_training = D_training.get_labels()
+	feature_vectors_testing = D_testing.get_feature_vectors()
+	labels_testing = D_testing.get_labels()
 	
-		
+	new_feature_vectors_training = []
+	new_feature_vectors_testing = []
+	
+	for FV in feature_vectors_training:
+		new_feature_vectors_training.append(FV[0:100])
+	
+	for FT in feature_vectors_testing:
+		new_feature_vectors_testing.append(FT[0:100])
+	
+	D_training.set_feature_vectors(new_feature_vectors_training)
+	D_testing.set_feature_vectors(new_feature_vectors_testing)
+	
+	clf = NN_Classifier()
+	clf.set_training_data(D_training)
+	clf.set_testing_data(D_testing)
+	
+	clf.train()
+	clf.predict()
+	
+	#predictions = D_testing.get_predictions()
+	
+	S = Statistics(D_testing, label_to_number)
+	
+def testing_NN_hardcoded_data():
+	D_training = Data()
+	D_testing = Data()
+	
+	D_training.set_feature_vectors(array([[1,1], [1,2], [5,5], [4,5], [4,10], [15,15], [15,17]]))
+	D_testing.set_feature_vectors(array([[2,1], [5,4], [4,5], [15,14]]))
+	
+	D_training.set_labels(array([1,1,2,2,2, 3,3]))
+	D_testing.set_labels(array([1,2,2,3]))
+	
+	clf = NN_Classifier()
+	clf.set_training_data(D_training)
+	clf.set_testing_data(D_testing)
+	
+	clf.train()
+	clf.predict()
+	
+	predictions = D_testing.get_predictions()
+	
+	print predictions
+	
+	S = Statistics(D_testing, label_to_number)
+
+def testing_SVM_hardcoded_data():
+	D_training = Data()
+	D_testing = Data()
+	
+	D_training.set_feature_vectors(array([[1,1], [1,2], [5,5], [4,5], [4,10], [15,15], [15,17]]))
+	D_testing.set_feature_vectors(array([[2,1], [5,4], [4,5], [15,14]]))
+	
+	D_training.set_labels(array([1,1,2,2,2, 3,3]))
+	D_testing.set_labels(array([1,2,2,3]))
+	
+	clf = SVC_Classifier()
+	clf.set_training_data(D_training)
+	clf.set_testing_data(D_testing)
+	
+	clf.train()
+	clf.predict()
+	
+	predictions = D_testing.get_predictions()
+	
+	print predictions
+	
+	S = Statistics(D_testing, label_to_number)
+
+def calculate_accuracy():
+	labels = [key for key in label_to_number]
+	print labels
+	print len(labels)
+	print len(label_to_number)
+
+def testing_read_kaggle_test_table():
+	D = read_kaggle_test_table()
+	print str(D)
+
+def testing_Data():
+	D = Data()
+	print str(D)
 #--------------------- Calling functions --------------------------
 
 #testing_split_data_function()
@@ -160,4 +252,9 @@ def testing_get_corner_points():
 #testing_showing_image()
 #testing_data_features()
 #testing_classifier_hu_moments()
-testing_get_corner_points()
+#testing_get_corner_points()
+#testing_NN_with_less_features()
+#testing_NN_hardcoded_data()
+#calculate_accuracy()
+#testing_read_kaggle_test_table()
+#testing_Data()

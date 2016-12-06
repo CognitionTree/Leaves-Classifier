@@ -1,7 +1,6 @@
 from random import *
 
 class Data:
-	
 	def __init__(self):
 		self.length = 0
 		self.feature_vectors = []
@@ -103,29 +102,26 @@ class Data:
 
 class Statistics:
 
-	def __init__(self, data):
+	def __init__(self, data, label_to_number):
 		self.labels = data.get_labels()
 		self.predictions = data.get_predictions()
 		self.length = data.get_length()
+		self.label_to_number = label_to_number
 		self.calculate_confusion_matrix()
 		self.calculate_accuracy()
-		
-	#confusion_matrix is a dictionary with keys = (label, prediction)
+			
+	
+	
 	def calculate_confusion_matrix(self):
 		self.confusion_matrix = {}
-						
-		for i in range(len(self.labels)):
-			for j in range(len(self.predictions)):
-				if (self.labels[i],self.predictions[j]) not in self.confusion_matrix:
-					self.confusion_matrix[(self.labels[i],self.predictions[j])] = 1
-				else:
-					self.confusion_matrix[(self.labels[i],self.predictions[j])] += 1
 		
+		for labels in self.label_to_number:
+			for predictions in self.label_to_number:
+				self.confusion_matrix[(labels, predictions)] = 0.0
+		
+		for i in range(len(self.labels)):
+			self.confusion_matrix[(self.labels[i], self.predictions[i])] += 1.0
 	
-	def get_confusion_matrix(self):
-		return self.confusion_matrix
-	
-	#TODO: calculate accuracy in terms of TP, TN, etc once those are found.
 	def calculate_accuracy(self):
 		total = 0
 		self.accuracy = 0
@@ -136,14 +132,12 @@ class Statistics:
 		
 		if total == 0:
 			total = 0.00001
+		print "total ", total, self.length
+		print self.accuracy
+		print len(self.confusion_matrix)
 		self.accuracy = 1.0* self.accuracy / total
-	
-	def get_accuracy(self):
-		return self.accuracy
-		
-		
-		
-
+		print self.accuracy
+			
 
 # ---------------------------Useful functions related to Data ---------------------------
 
@@ -195,7 +189,6 @@ def split_data(data, percentage_training):
 	feature_names_testing = feature_names
 	
 	
-	
 	data_training.set_feature_vectors(feature_vectors_training)
 	data_training.set_labels(labels_training)
 	data_training.set_predictions(predictions_training)
@@ -212,7 +205,6 @@ def split_data(data, percentage_training):
 	data_testing.set_feature_names(feature_names_testing)
 	data_testing.set_table_ids(table_ids_testing)
 	
-	
 	#print "length of data: ", length_data
 	#print "length of length_training_data: ", length_training_data
 	#print "length of data_training: ", data_training.get_length()
@@ -220,3 +212,23 @@ def split_data(data, percentage_training):
 	#print "length of data_training: ", data_testing.get_length()
 
 	return data_training, data_testing
+
+
+def split_data_by_labels(data):
+	length_data = data.get_length()
+	feature_names = data.get_feature_names()
+	data_with_labels = Data()
+	data_without_labels = Data()
+	
+	if length_data == 0:
+		return data_with_labels, data_without_labels
+	
+	
+	#getting variables
+	feature_vectors = data.get_feature_vectors()
+	labels = data.get_labels()
+	predictions = data.get_predictions()
+	images_binary = data.get_images_binary()
+	images_color = data.get_images_color()
+	table_ids = data.get_table_ids()
+	
