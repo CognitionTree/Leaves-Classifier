@@ -23,6 +23,7 @@ def test_reading_table():
 	print train_table_data.get_feature_names()
 	print train_table_data.get_labels()
 	print train_table_data.get_table_ids()
+	print train_table_data.get_numeric_labels()
 
 def test_read_all_images():
 	data = read_all_kaggle_gray_scale_images(kaggle_images_path)
@@ -35,6 +36,6 @@ def test_edge_detector():
 	#set_printoptions(threshold=nan)
 	print get_edge_points(read_image_grayscale(sample_binary_image))
 
-#test_reading_table()
+test_reading_table()
 #test_read_all_images()
-test_edge_detector()	
+#test_edge_detector()	

@@ -21,6 +21,10 @@ train_kaggle_table = 'Data/Dataset1/data_binary_Kaggle/train.csv'
 kaggle_images_path = 'Data/Dataset1/data_binary_Kaggle' 
 
 sample_binary_image = 'Data/Dataset1/data_binary_Kaggle/370.jpg'
+
+
+label_to_number = {'Populus_Nigra': 69, 'Acer_Saccharinum': 41, 'Quercus_Pontica': 12, 'Alnus_Viridis': 86, 'Olea_Europaea': 88, 'Acer_Rufinerve': 58, 'Acer_Rubrum': 79, 'Cotinus_Coggygria': 33, 'Quercus_Castaneifolia': 76, 'Cornus_Macrophylla': 73, 'Quercus_Pyrenaica': 38, 'Quercus_Rubra': 7, 'Quercus_Semecarpifolia': 49, 'Quercus_Afares': 13, 'Quercus_Pubescens': 18, 'Acer_Pictum': 57, 'Ginkgo_Biloba': 51, 'Quercus_Suber': 45, 'Quercus_x_Turneri': 75, 'Salix_Fragilis': 9, 'Alnus_Cordata': 68, 'Quercus_Agrifolia': 56, 'Sorbus_Aria': 98, 'Acer_Opalus': 0, 'Alnus_Maximowiczii': 55, 'Tilia_Oliveri': 48, 'Quercus_Trojana': 20, 'Quercus_Phellos': 53, 'Tilia_Tomentosa': 3, 'Quercus_Greggii': 44, 'Rhododendron_x_Russellianum': 29, 'Quercus_Rhysophylla': 92, 'Quercus_Crassifolia': 35, 'Alnus_Sieboldiana': 21, 'Castanea_Sativa': 93, 'Callicarpa_Bodinieri': 39, 'Quercus_Shumardii': 91, 'Zelkova_Serrata': 10, 'Eucalyptus_Urnigera': 81, 'Liriodendron_Tulipifera': 27, 'Fagus_Sylvatica': 15, 'Betula_Austrosinensis': 11, 'Crataegus_Monogyna': 74, 'Populus_Adenopoda': 19, 'Acer_Mono': 72, 'Prunus_Avium': 43, 'Acer_Circinatum': 62, 'Magnolia_Heptapeta': 71, 'Quercus_Texana': 50, 'Ilex_Aquifolium': 61, 'Lithocarpus_Cleistocarpus': 59, 'Quercus_Coccifera': 14, 'Quercus_Kewensis': 36, 'Populus_Grandidentata': 78, 'Cornus_Controversa': 37, 'Quercus_Vulcanica': 85, 'Cytisus_Battandieri': 28, 'Celtis_Koraiensis': 34, 'Acer_Capillipes': 70, 'Quercus_Dolicholepis': 46, 'Arundinaria_Simonii': 23, 'Pterocarya_Stenoptera': 1, 'Quercus_Canariensis': 6, 'Alnus_Rubra': 30, 'Quercus_Cerris': 64, 'Quercus_Ellipsoidalis': 89, 'Quercus_Palustris': 54, 'Quercus_Ilex': 22, 'Prunus_X_Shmittii': 42, 'Quercus_Coccinea': 63, 'Quercus_Variabilis': 4, 'Lithocarpus_Edulis': 77, 'Quercus_x_Hispanica': 90, 'Magnolia_Salicifolia': 5, 'Phildelphus': 16, 'Acer_Platanoids': 24, 'Tilia_Platyphyllos': 67, 'Acer_Palmatum': 17, 'Eucalyptus_Glaucescens': 31, 'Ilex_Cornuta': 47, 'Betula_Pendula': 87, 'Cercis_Siliquastrum': 32, 'Quercus_Phillyraeoides': 25, 'Quercus_Alnifolia': 40, 'Quercus_Brantii': 8, 'Viburnum_x_Rhytidophylloides': 60, 'Quercus_Chrysolepis': 65, 'Quercus_Nigra': 95, 'Morus_Nigra': 84, 'Cornus_Chinensis': 26, 'Ulmus_Bergmanniana': 94, 'Liquidambar_Styraciflua': 52, 'Eucalyptus_Neglecta': 66, 'Quercus_Infectoria_sub': 97, 'Quercus_Hartwissiana': 2, 'Viburnum_Tinus': 83, 'Quercus_Imbricaria': 80, 'Quercus_Crassipes': 82, 'Salix_Intergra': 96}
+
 #---------------------------------------Math Tools---------------------------------------
 #Notice: Since we started using numpy arrays instead of dictionaries to represent vectors
 #		 some of these functions are to simple to even be considered. However since they
@@ -135,10 +139,12 @@ def read_kaggle_training_table(table_path):
 	feature_vectors = []
 	labels = []
 	ids = []
+	numeric_labels = []
 	(feature_names, feature_vectors_str) = read_excel_table(table_path)
-	
+
 	for row in feature_vectors_str:
 		labels.append(row[1])
+		numeric_labels.append(label_to_number[row[1]])
 		ids.append(row[0])
 		row = row[2:len(row)]
 		
@@ -148,7 +154,8 @@ def read_kaggle_training_table(table_path):
 	data.set_feature_names(array(feature_names))
 	data.set_labels(array(labels))
 	data.set_table_ids(array(ids))
-	
+	data.set_numeric_labels(array(numeric_labels))	
+
 	return data
 
 #image_path is the path to the image
@@ -175,6 +182,7 @@ def read_all_kaggle_gray_scale_images(images_directory_path):
 	images = []	
 	ids = []
 	labels = []
+	numeric_labels = []
 	data = Data()
 		
 	
@@ -190,6 +198,7 @@ def read_all_kaggle_gray_scale_images(images_directory_path):
 		images.append(read_image_grayscale(f))
 	
 		labels.append(None)
+		numeric_labels.append(None)
 
 	table_ids = train_table_data.get_table_ids()
 	table_labels = train_table_data.get_labels()
@@ -200,12 +209,15 @@ def read_all_kaggle_gray_scale_images(images_directory_path):
 		for j in range(len(table_ids)):
 			if table_ids[j] == image_id:
 				labels[i] = table_labels[j]
+				numeric_labels[i] = label_to_number[table_labels[j]]
 				break
 		
 
 	data.set_images_binary(array(images))
 	data.set_table_ids(array(ids))
 	data.set_labels(array(labels))
+	data.set_numeric_labels(array(numeric_labels))
+
 	return data
 
 #This function reads all leaves images in rgb on the provided path
