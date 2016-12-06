@@ -150,6 +150,32 @@ def get_binary_image_contours(image):
 
 #-------------------------------------File System Processing Tools-----------------------
 
+#headers is a list or numpy array
+#rows is a list of lists
+#file_name does not contain the .csv extension
+def build_excel_file(rows, file_name, headers=None):
+	formated_string = ''
+
+	if headers != None:
+		for h in headers:
+			formated_string = formated_string + str(h)+','
+
+		formated_string = formated_string[0:len(formated_string)-1]
+		formated_string+='\n'
+
+	for row in rows:
+		for e in row:
+			formated_string += str(e)+','
+		formated_string = formated_string[0:len(formated_string)-1]
+		formated_string+='\n'
+
+	f = open(file_name+'.csv', 'w')
+	f.write(formated_string)
+	f.close()
+
+	
+	 
+
 #table_path is the path to the excel_table
 #return a Data object with feature vectors and labels included
 def read_excel_table(table_path):

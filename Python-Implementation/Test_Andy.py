@@ -46,8 +46,15 @@ def test_binary():
 	#display_image(get_binary_image(read_image_grayscale(sample_color_image)))
 	display_image(get_binary_image(read_image_grayscale(sample_color_image_3)))
 
+def test_build_excel_table():
+	headers = ['Age', 'Money', 'SSN']
+	rows = [[15, 100, '1234'], [20, 1000, '5678'], [40, 10000, '8976']]
+	file_name = 'text_excel'
+	build_excel_file(rows, file_name, headers)
+
 #test_reading_table()
 #test_read_all_images()
 #test_edge_detector()
-test_binary()
-test_binary_countours()	
+#test_binary()
+#test_binary_countours()
+test_build_excel_table()	
