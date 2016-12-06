@@ -134,7 +134,6 @@ class Statistics:
 			total = 0.00001
 		print "total ", total, self.length
 		print self.accuracy
-		print len(self.confusion_matrix)
 		self.accuracy = 1.0* self.accuracy / total
 		print self.accuracy
 			

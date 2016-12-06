@@ -127,6 +127,8 @@ def get_solidity(img):
 	area = cv2.contourArea(cnt)
 	hull = cv2.convexHull(cnt)
 	hull_area = cv2.contourArea(hull)
+	if hull_area == 0:
+		hull_area = 0.0001
 	solidity = float(area)/hull_area
 
 	return solidity

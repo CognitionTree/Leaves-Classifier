@@ -27,7 +27,6 @@ class Feature_Extractors:
 
 		return (array(feature_names), array(feature_moments))
 
-	
 	def solidity_feature_extractor(self, image):
 		solidity = get_solidity(image)
 		return (array(['solidity']), array([solidity]))
@@ -38,13 +37,6 @@ class Feature_Extractors:
 		hu_moments = cv2.HuMoments(moments).flatten()
 		
 		return (feature_names, hu_moments)
-	
-	
-	def corner_count_feature_extractor(self, image):
-		corners = get_corner_points(image, 100)
-		features = array([len(corners)])
-		feature_names = array(['number_corners'])
-		return (feature_names, features)
 
 	def length_width_ratio_feature_extractor(self, image):
 		ratio = 0
@@ -63,15 +55,12 @@ class Feature_Extractors:
 
 		return (feature_names, features)
 
-	def corner_ratio_feature_extractor(self, image):
-		(feature_names1, features1) = self.corner_count_feature_extractor(image)
-		#print 'AAAA'
-		#print features1
-		#print feature_names1
-		(feature_names2, features2) = self.length_width_ratio_feature_extractor(image)
-
-		return (array(list(feature_names1)+list(feature_names2)), array(list(features1)+list(features2)))
-	
+	def corner_count_feature_extractor(self, image):
+		corners = get_corner_points(image, 100)
+		features = array([len(corners)])
+		feature_names = array(['number_corners'])
+		return (feature_names, features)
+		
 	def perimeter_area_ratio_feature_extractor(self, image):
 		
 		area_points = get_image_area(image)
@@ -98,7 +87,13 @@ class Feature_Extractors:
 		feature_names = array(['ratio_of_areas'])
 
 		return (feature_names, features)
+	
+	def corner_ratio_feature_extractor(self, image):
+		(feature_names1, features1) = self.corner_count_feature_extractor(image)
+		(feature_names2, features2) = self.length_width_ratio_feature_extractor(image)
 
+		return (array(list(feature_names1)+list(feature_names2)), array(list(features1)+list(features2)))
+	
 	def all_areas_feature_extractor(self, image):
 		(feature_names1, features1) = self.perimeter_area_ratio_feature_extractor(image)
 		(feature_names2, features2) = self.ratio_of_areas_feature_extractor(image)
@@ -113,5 +108,22 @@ class Feature_Extractors:
 
 		features = array(list(features1)+list(features2)+list(features3)+list(features4))
 		feature_names = array(list(feature_names1)+list(feature_names2)+list(feature_names4)+list(feature_names4))
+		
+		return (feature_names, features)
+	
+	def all_feature_extractor(self, image):
+		(feature_names1, features1) = self.corner_count_feature_extractor(image)
+		(feature_names2, features2) = self.length_width_ratio_feature_extractor(image)
+		(feature_names3, features3) = self.perimeter_area_ratio_feature_extractor(image)
+		(feature_names4, features4) = self.ratio_of_areas_feature_extractor(image)
+		(feature_names5, features5) = self.moments_feature_extractor(image)
+		(feature_names6, features6) = self.solidity_feature_extractor(image)
+		(feature_names7, features7) = self.hu_momments_feature_extractor(image)
+
+		features = array(list(features1)+list(features2)+list(features3)+list(features4) + \
+		list(features5)+list(features6)+list(features7))
+		
+		feature_names = array(list(feature_names1)+list(feature_names2)+list(feature_names3) + \
+		list(feature_names4) + list(feature_names5) + list(feature_names6) + list(feature_names7))
 		
 		return (feature_names, features)
