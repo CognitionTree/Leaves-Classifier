@@ -53,6 +53,47 @@ class Feature_Extractors:
 		(feature_names2, features2) = self.length_width_ratio_feature_extractor(image)
 
 		return (array(list(feature_names1)+list(feature_names2)), array(list(features1)+list(features2)))
+	
+	def perimeter_area_ratio_feature_extractor(self, image):
+		
+		area_points = get_image_area(image)
+		edge_points = get_edge_points(image)
+		perimeter = len(edge_points)
+		
+		perimeter_area_ratio = 1.0 * perimeter / area_points
+		
+		features = array([perimeter_area_ratio])
+		feature_names = array(['perimeter_area_ratio'])
 
-		 
-			 
+		return (feature_names, features)
+	
+	def ratio_of_areas_feature_extractor(self, image):
+		area_points = get_image_area(image)
+		x_diff = max_x_diff(image)
+		y_diff = max_y_diff(image)
+		
+		area_square = x_diff * y_diff
+		
+		ratio_of_areas = 1.0* area_square / area_points
+		
+		features = array([ratio_of_areas])
+		feature_names = array(['ratio_of_areas'])
+
+		return (feature_names, features)
+
+	def all_areas_feature_extractor(self, image):
+		(feature_names1, features1) = self.perimeter_area_ratio_feature_extractor(image)
+		(feature_names2, features2) = self.ratio_of_areas_feature_extractor(image)
+
+		return (array(list(feature_names1)+list(feature_names2)), array(list(features1)+list(features2)))
+	
+	def all_four_feature_extractor(self, image):
+		(feature_names1, features1) = self.corner_count_feature_extractor(image)
+		(feature_names2, features2) = self.length_width_ratio_feature_extractor(image)
+		(feature_names3, features3) = self.perimeter_area_ratio_feature_extractor(image)
+		(feature_names4, features4) = self.ratio_of_areas_feature_extractor(image)
+
+		features = array(list(features1)+list(features2)+list(features3)+list(features4))
+		feature_names = array(list(feature_names1)+list(feature_names2)+list(feature_names4)+list(feature_names4))
+		
+		return (feature_names, features)

@@ -196,6 +196,11 @@ def get_binary_image_contours(image):
 	
 	return mask
 
+
+def get_image_area(image):
+	nonzero = count_nonzero(image)
+	return nonzero
+
 #-------------------------------------File System Processing Tools-----------------------
 
 #headers is a list or numpy array
@@ -385,3 +390,4 @@ def read_all_grayscale_images(images_directory_path):
 
 	data.set_images_binary(array(images))
 	return data
+	

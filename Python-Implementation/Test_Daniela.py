@@ -240,6 +240,111 @@ def testing_split_data_by_labels():
 	print str(data_testing)
 	
 
+def classify_with_hu_moments():
+	F = Feature_Extractors()
+	D = read_all_kaggle_gray_scale_images()
+	data_with_labels, data_without_labels = split_data_by_labels(D)
+	
+	length = data_with_labels.get_length()
+	binary_images = data_with_labels.get_images_binary()
+	
+	feature_vectors = [] 
+	for i in range(length):
+		im = binary_images[i]
+		feat_names, feat_vector = F.hu_momments_feature_extractor(im)
+		feature_vectors.append(feat_vector)
+	
+	data_with_labels.set_feature_names(feat_names)
+	data_with_labels.set_feature_vectors(feature_vectors)
+	
+	print str(data_with_labels)
+	
+	D_training, D_testing = split_data(data_with_labels, 0.80)
+	
+	feature_vectors_training = D_training.get_feature_vectors()
+	labels_training = D_training.get_labels()
+	feature_vectors_testing = D_testing.get_feature_vectors()
+	labels_testing = D_testing.get_labels()
+	
+	clf = SVC_Classifier()
+	clf.set_training_data(D_training)
+	clf.set_testing_data(D_testing)
+	
+	clf.train()
+	clf.predict()
+	
+	S = Statistics(D_testing, label_to_number)
+	
+	
+def testing_get_image_area():
+	im = read_image_grayscale("1.jpg")
+	area = get_image_area(im)
+	print area
+
+
+def testing_all_areas_feature_extractor():
+	fe = Feature_Extractors()
+
+	print '367:' + str(fe.all_four_feature_extractor(read_image_grayscale(sample_binary_image_367)))
+	print '455:' + str(fe.all_four_feature_extractor(read_image_grayscale(sample_binary_image_455)))
+	print '-----------------------------------------'
+	print '317:' + str(fe.all_four_feature_extractor(read_image_grayscale(sample_binary_image_317)))
+	print '1:' + str(fe.all_four_feature_extractor(read_image_grayscale(sample_binary_image_1)))
+	print '-----------------------------------------'
+	print '2:' + str(fe.all_four_feature_extractor(read_image_grayscale(sample_binary_image_2)))
+	print '431:' + str(fe.all_four_feature_extractor(read_image_grayscale(sample_binary_image_431)))
+	print '762:' + str(fe.all_four_feature_extractor(read_image_grayscale(sample_binary_image_762)))
+	print '-------------------------------------------------------'
+	print '5:' + str(fe.all_four_feature_extractor(read_image_grayscale(sample_binary_image_5)))
+	print '50:' + str(fe.all_four_feature_extractor(read_image_grayscale(sample_binary_image_50)))
+
+
+def classify_with_all_features():
+	F = Feature_Extractors()
+	print "reading images"
+	D = read_all_kaggle_gray_scale_images()
+	
+	print "splitting by labels (by None)"
+	data_with_labels, data_without_labels = split_data_by_labels(D)
+	
+	length = data_with_labels.get_length()
+	binary_images = data_with_labels.get_images_binary()
+	
+	feature_vectors = [] 
+	print "length is ", length
+	for i in range(length):
+		print "extracting features ", i
+		im = binary_images[i]
+		feat_names, feat_vector = F.all_four_feature_extractor(im)
+		feature_vectors.append(feat_vector)
+	
+	data_with_labels.set_feature_names(feat_names)
+	data_with_labels.set_feature_vectors(feature_vectors)
+	
+	#print str(data_with_labels)
+	
+	print "splitting by testing/training"
+	D_training, D_testing = split_data(data_with_labels, 0.80)
+	
+	feature_vectors_training = D_training.get_feature_vectors()
+	labels_training = D_training.get_labels()
+	feature_vectors_testing = D_testing.get_feature_vectors()
+	labels_testing = D_testing.get_labels()
+	
+	print "classifying"
+	clf = SVC_Classifier()
+	clf.set_training_data(D_training)
+	clf.set_testing_data(D_testing)
+	
+	print "training"
+	clf.train()
+	
+	print "predicting"
+	clf.predict()
+	
+	print "stats"
+	S = Statistics(D_testing, label_to_number)
+	
 #--------------------- Calling functions --------------------------
 
 #testing_split_data_function()
@@ -258,3 +363,7 @@ def testing_split_data_by_labels():
 #testing_NN_hardcoded_data()
 #calculate_accuracy()
 #testing_split_data_by_labels()
+#classify_with_hu_moments()
+#testing_get_image_area()
+#testing_all_areas_feature_extractor()
+classify_with_all_features()
