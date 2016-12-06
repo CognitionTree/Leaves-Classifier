@@ -100,6 +100,39 @@ def test_moments_feature_extractor():
 	print '5:' + str(fe.moments_feature_extractor(read_image_grayscale(sample_binary_image_5)))
 	print '50:' + str(fe.moments_feature_extractor(read_image_grayscale(sample_binary_image_50)))
 
+def test_plot():
+	l = ['Rhododendron', 'Zelkova', 'Prunus', 'Magnolia', 'Castanea', 'Liriodendron', 'Phildelphus', 'Morus', 'Crataegus', 'Sorbus', 'Lithocarpus', 'Alnus', 'Populus', 'Arundinaria', 'Ulmus', 'Ginkgo', 'Callicarpa', 'Ilex', 'Betula', 'Eucalyptus', 'Viburnum', 'Cornus', 'Pterocarya', 'Cercis', 'Cotinus', 'Celtis', 'Tilia', 'Olea', 'Fagus', 'Quercus', 'Liquidambar', 'Salix', 'Cytisus', 'Acer']
+	ys = []
+	xs =[]
+	
+	for i in range(len(l)):
+		ys.append(i)
+		xs.append(i)
+
+	plot_points(xs, ys, l)
+
+def ploting_data():
+	path_to_tables = 'Data/Plot_Tables'
+
+	files = glob(path_to_tables+'/*.csv')
+
+	for f in files:
+		(headers, rows) = read_excel_table(f)
+		xs = []
+		ys = []
+		labels = []
+		for row in rows:
+			labels.append(row[1])
+			xs.append(row[2])
+			ys.append(row[3])
+		print f
+		plot_points(xs, ys, labels)
+		
+
+		
+
+	#read_excel_table(table_path)
+
 #test_reading_table()
 #test_read_all_images()
 #test_edge_detector()
@@ -108,4 +141,6 @@ def test_moments_feature_extractor():
 #test_build_excel_table()
 #test_length_width_ratio_feature_extractor()
 #test_solidity_extractor()
-test_moments_feature_extractor()	
+#test_moments_feature_extractor()
+#test_plot()
+ploting_data()	
