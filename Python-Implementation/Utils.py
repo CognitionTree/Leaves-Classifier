@@ -13,6 +13,8 @@ from glob import *
 import cv2
 from PIL import Image
 from sys import*
+import matplotlib.pyplot as plt
+import pylab as plt
 
 #---------------------------------------Variables----------------------------------------
 test_kaggle_table = 'Data/Dataset1/data_binary_Kaggle/test.csv'
@@ -37,6 +39,8 @@ sample_binary_image_50 = 'Data/Dataset1/data_binary_Kaggle/50.jpg'
 sample_color_image_1 = 'Data/Google_Images/1.jpg'
 sample_color_image_2 = 'Data/Google_Images/2.jpg'
 sample_color_image_3 = 'Data/Google_Images/3.jpg'
+
+colors = {'Rhododendron':'black', 'Zelkova':'dimgrey', 'Prunus':'darkgrey', 'Magnolia':'lightgray', 'Castanea':'rosybrown', 'Liriodendron':'lightcoral', 'Phildelphus':'maroon', 'Morus':'red', 'Crataegus':'salmon', 'Sorbus':'orangered', 'Lithocarpus':'sienna', 'Alnus':'saddlebrown', 'Populus':'palevioletred', 'Arundinaria':'pink', 'Ulmus':'magenta', 'Ginkgo':'m', 'Callicarpa':'purple', 'Ilex':'darkmagenta', 'Betula':'b', 'Eucalyptus':'navy', 'Viburnum':'royalblue', 'Cornus':'skyblue', 'Pterocarya':'steelblue', 'Cercis':'aqua', 'Cotinus':'c', 'Celtis':'teal', 'Tilia':'green', 'Olea':'lime', 'Fagus':'seagreen', 'Quercus':'sage', 'Liquidambar':'y', 'Salix':'khaki', 'Cytisus':'chartreuse', 'Acer':'yellow'}
 
 label_to_number = {'Populus_Nigra': 69, 'Acer_Saccharinum': 41, 'Quercus_Pontica': 12, \
 'Alnus_Viridis': 86, 'Olea_Europaea': 88, 'Acer_Rufinerve': 58, 'Acer_Rubrum': 79, \
@@ -109,6 +113,20 @@ def scalar_multiplication(v, c):
 def norm(v):
 	norm = sqrt(sum(v**2))
 	return norm
+
+#------------------------------------Ploting Tools----------------------------------
+def plot_points(xs, ys, labels, filename=None):
+	
+	
+	for i in range(len(xs)):
+		plt.scatter(xs[i],ys[i], c=colors[labels[i]], label=labels[i])
+	
+	plt.legend()
+	plt.grid(True)
+	if filename == None:
+		plt.show()
+	else:
+		plt.savefig(filename+'png')
 
 #-------------------------------------Image Processing Tools-----------------------------
 
