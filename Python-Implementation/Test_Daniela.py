@@ -1,7 +1,7 @@
 from Data import *
-#from Utils import *
-#from Classifiers import *
-#from FeatureExtractors import *
+from Utils import *
+from Classifiers import *
+from FeatureExtractors import *
 
 
 def testing_split_data_function():
@@ -25,11 +25,69 @@ def testing_statistics():
 	S = Statistics(D)
 	accuracy = S.get_accuracy()
 	print accuracy
+
+def testing_hu_moments_feature_extractor():
+	FE = Feature_Extractors()
+	image = read_image_grayscale("1.jpg")
+	feature_names, hu_moments = FE.hu_momments_extractor(image)
+	print feature_names
+	print hu_moments
+
+def testing_Data():
+	D = read_kaggle_training_table(train_kaggle_table)
+	ids = D.get_table_ids()
+	l = len(ids)
 	
+	if D.get_labels() == []:
+		print "yes"
+	else:
+		print "No"
+	
+	if D.get_table_ids() == []:
+		print "yes"
+	else:
+		print "No"
+	
+	print l
+
+def testing_showing_image():
+	im = read_image_grayscale('1.jpg')
+	cv2.imshow('image', im)
+	cv2.waitKey(0)
+	#cv2.destroyAllWindows()
+	
+			
+def classifying_data_SVC():
+	D = read_kaggle_training_table(train_kaggle_table)
+	D_training, D_testing = split_data(D, 0.80)
+	
+	feature_vectors_training = D_training.get_feature_vectors()
+	labels_training = D_training.get_labels()
+	feature_vectors_testing = D_testing.get_feature_vectors()
+	labels_testing = D_testing.get_labels()
+	
+	clf = SVC_Classifier()
+	clf.set_training_data(D_training)
+	clf.set_testing_data(D_testing)
+	
+	clf.train()
+	clf.predict()
+	
+	predictions = D_testing.get_predictions()
+	print predictions
+	
+	
+	#print str(D)
+	#print labels
+	#print feature_vectors
 	
 #--------------------- Calling functions --------------------------
 
 #testing_split_data_function()
 #testing_SVC_classifier()
 #testing_str_data()
-testing_statistics()
+#testing_statistics()
+#testing_hu_moments_feature_extractor()
+#testing_Data()
+classifying_data_SVC()
+#testing_showing_image()

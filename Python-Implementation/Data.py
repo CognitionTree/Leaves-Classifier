@@ -1,4 +1,4 @@
-import random
+from random import *
 
 class Data:
 	
@@ -11,6 +11,7 @@ class Data:
 		self.images_color = []
 		self.feature_names = []
 		self.table_ids = []
+		self.numeric_labels = []
 	
 	#feature_vectors = [phi(I1), phi(I2),...,phi(In)]
 	def set_feature_vectors(self, feature_vectors):
@@ -29,6 +30,14 @@ class Data:
 	def get_labels(self):
 		return self.labels
 		
+	
+	#numeric_labels = [l1,l2,...,ln]
+	def set_numeric_labels(self, numeric_labels):
+		self.length = len(numeric_labels)
+		self.numeric_labels = numeric_labels
+	
+	def get_numeric_labels(self):
+		return self.numeric_labels
 		
 	#predictions = [p1, p2, ...., pn]
 	def set_predictions(self, predictions):
@@ -143,6 +152,7 @@ class Statistics:
 def split_data(data, percentage_training):
 	length_data = data.get_length()
 	length_training_data = int(percentage_training * length_data)
+	feature_names = data.get_feature_names()
 	data_training = Data()
 	data_testing = Data()
 	
@@ -150,38 +160,40 @@ def split_data(data, percentage_training):
 		return data_training, data_testing
 	
 	#shuffle data:
-	shuffled_indices = random.shuffle([i for i in range(length_data)])
-	print shuffled_indices
+	shuffled_indices = [i for i in range(length_data)]
+	shuffle(shuffled_indices)
 	
-	feature_vectors = [data.get_feature_vectors()[i] for i in shuffled_indices]
-	labels = [data.get_labels()[i] for i in shuffled_indices]
-	predictions = [data.get_predictions()[i] for i in shuffled_indices]
-	images_binary = [data.get_images_binary()[i] for i in shuffled_indices]
-	images_color = [data.get_images_color()[i] for i in shuffled_indices]
-	feature_names = [data.get_feature_names()[i] for i in shuffled_indices]
-	table_ids = [data.get_table_ids()[i] for i in shuffled_indices]
+	#Getting variables and shuffling them
+	feature_vectors = [data.get_feature_vectors()[i] for i in shuffled_indices if len(data.get_feature_vectors()) != 0]
+	labels = [data.get_labels()[i] for i in shuffled_indices if len(data.get_labels()) != 0]
+	predictions = [data.get_predictions()[i] for i in shuffled_indices if len(data.get_predictions()) != 0]
+	images_binary = [data.get_images_binary()[i] for i in shuffled_indices if len(data.get_images_binary()) != 0]
+	images_color = [data.get_images_color()[i] for i in shuffled_indices if len(data.get_images_color()) != 0]
+	table_ids = [data.get_table_ids()[i] for i in shuffled_indices if len(data.get_table_ids()) != 0]
 	
 	
-	feature_vectors_training = [feature_vectors[i] for i in range(length_data) if i <= length_training_data]
-	feature_vectors_testing = [feature_vectors[i] for i in range(length_data) if i > length_training_data]
+	#splitting variable content
+	feature_vectors_training = [feature_vectors[i] for i in range(length_data) if i <= length_training_data if feature_vectors != []]
+	feature_vectors_testing = [feature_vectors[i] for i in range(length_data) if i > length_training_data if feature_vectors != []]
 	
-	labels_training = [labels[i] for i in range(length_data) if i <= length_training_data]
-	labels_testing = [labels[i] for i in range(length_data) if i > length_training_data]
+	labels_training = [labels[i] for i in range(length_data) if i <= length_training_data if labels != []]
+	labels_testing = [labels[i] for i in range(length_data) if i > length_training_data if labels != []]
 	
-	predictions_training = [predictions[i] for i in range(length_data) if i <= length_training_data]
-	predictions_testing = [predictions[i] for i in range(length_data) if i > length_training_data]
+	predictions_training = [predictions[i] for i in range(length_data) if i <= length_training_data if predictions != []]
+	predictions_testing = [predictions[i] for i in range(length_data) if i > length_training_data if predictions != []]
 	
-	images_binary_training = [images_binary[i] for i in range(length_data) if i <= length_training_data]
-	images_binary_testing = [images_binary[i] for i in range(length_data) if i > length_training_data]
+	images_binary_training = [images_binary[i] for i in range(length_data) if i <= length_training_data if images_binary != []]
+	images_binary_testing = [images_binary[i] for i in range(length_data) if i > length_training_data if images_binary != []]
 	
-	images_color_training = [images_color[i] for i in range(length_data) if i <= length_training_data]
-	images_color_testing = [images_color[i] for i in range(length_data) if i > length_training_data]
+	images_color_training = [images_color[i] for i in range(length_data) if i <= length_training_data if images_color != []]
+	images_color_testing = [images_color[i] for i in range(length_data) if i > length_training_data if images_color != []]
 	
-	feature_names_training = [feature_names[i] for i in range(length_data) if i <= length_training_data]
-	feature_names_testing = [feature_names[i] for i in range(length_data) if i > length_training_data]
+	table_ids_training = [table_ids[i] for i in range(length_data) if i <= length_training_data if table_ids != []]
+	table_ids_testing = [table_ids[i] for i in range(length_data) if i > length_training_data if table_ids != []]
 	
-	table_ids_training = [table_ids[i] for i in range(length_data) if i <= length_training_data]
-	table_ids_testing = [table_ids[i] for i in range(length_data) if i > length_training_data]
+	feature_names_training = feature_names
+	feature_names_testing = feature_names
+	
 	
 	
 	data_training.set_feature_vectors(feature_vectors_training)
@@ -200,15 +212,11 @@ def split_data(data, percentage_training):
 	data_testing.set_feature_names(feature_names_testing)
 	data_testing.set_table_ids(table_ids_testing)
 	
-	print "length of data: ", length_data
-	print "length of length_training_data: ", length_training_data
-	print "length of data_training: ", data_training.get_length()
-	print "length of length_training_data: ", (length_data - length_training_data)
-	print "length of data_training: ", data_testing.get_length()
+	
+	#print "length of data: ", length_data
+	#print "length of length_training_data: ", length_training_data
+	#print "length of data_training: ", data_training.get_length()
+	#print "length of length_training_data: ", (length_data - length_training_data)
+	#print "length of data_training: ", data_testing.get_length()
 
 	return data_training, data_testing
-	
-	
-	
-	
-	
