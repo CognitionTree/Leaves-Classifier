@@ -74,6 +74,10 @@ def test_length_width_ratio_feature_extractor():
 	print '-----------------------------------------'
 	print '2:' + str(fe.corner_ratio_feature_extractor(read_image_grayscale(sample_binary_image_2)))
 	print '431:' + str(fe.corner_ratio_feature_extractor(read_image_grayscale(sample_binary_image_431)))
+	print '762:' + str(fe.corner_ratio_feature_extractor(read_image_grayscale(sample_binary_image_762)))
+	print '-------------------------------------------------------'
+	print '5:' + str(fe.corner_ratio_feature_extractor(read_image_grayscale(sample_binary_image_5)))
+	print '50:' + str(fe.corner_ratio_feature_extractor(read_image_grayscale(sample_binary_image_50)))
 
 #test_reading_table()
 #test_read_all_images()

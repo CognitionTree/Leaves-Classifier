@@ -28,6 +28,10 @@ sample_binary_image_317 = 'Data/Dataset1/data_binary_Kaggle/317.jpg'
 
 sample_binary_image_2 = 'Data/Dataset1/data_binary_Kaggle/2.jpg'
 sample_binary_image_431 = 'Data/Dataset1/data_binary_Kaggle/431.jpg'
+sample_binary_image_762 = 'Data/Dataset1/data_binary_Kaggle/762.jpg'
+
+sample_binary_image_5 = 'Data/Dataset1/data_binary_Kaggle/5.jpg'
+sample_binary_image_50 = 'Data/Dataset1/data_binary_Kaggle/50.jpg'
 
 sample_color_image_1 = 'Data/Google_Images/1.jpg'
 sample_color_image_2 = 'Data/Google_Images/2.jpg'
@@ -125,7 +129,7 @@ def get_edge_points(img):
 
 def get_corner_points(img, maxFeat):
 	
-	feature_params = dict( maxCorners = maxFeat, qualityLevel = 0.6, minDistance = 30, blockSize = 7 )
+	feature_params = dict( maxCorners = maxFeat, qualityLevel = 0.6, minDistance = 7, blockSize = 7 )
 	corners = cv2.goodFeaturesToTrack(img, mask = None, **feature_params)
 	return corners
 	
