@@ -116,8 +116,8 @@ class Feature_Extractors:
 		(feature_names2, features2) = self.length_width_ratio_feature_extractor(image)
 		(feature_names3, features3) = self.perimeter_area_ratio_feature_extractor(image)
 		(feature_names4, features4) = self.ratio_of_areas_feature_extractor(image)
-		(feature_names5, features5) = self.moments_feature_extractor(image)
-		(feature_names6, features6) = self.solidity_feature_extractor(image)
+		(feature_names5, features5) = self.solidity_feature_extractor(image)
+		(feature_names6, features6) = self.moments_feature_extractor(image)
 		(feature_names7, features7) = self.hu_momments_feature_extractor(image)
 
 		features = array(list(features1)+list(features2)+list(features3)+list(features4) + \
