@@ -21,12 +21,3 @@ class Feature_Extractors:
 		
 		return (feature_names, hu_moments)
 		
-
-#------------------------------For testing purpose only: -----------------------------------
-
-FE = Feature_Extractors()
-image = read_image_grayscale("1.jpg")
-feature_names, hu_moments = FE.hu_momments_extractor(image)
-print feature_names
-print hu_moments
-
