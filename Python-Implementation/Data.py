@@ -55,7 +55,7 @@ class Data:
 	
 	def get_images_binary(self):
 		return self.images_binary
-	
+
 	
 	#images_color = [I1, I2, ..., In]
 	#where I is a 3D cv2 array (RGB image)
@@ -225,10 +225,42 @@ def split_data_by_labels(data):
 	
 	
 	#getting variables
-	feature_vectors = data.get_feature_vectors()
 	labels = data.get_labels()
-	predictions = data.get_predictions()
 	images_binary = data.get_images_binary()
-	images_color = data.get_images_color()
 	table_ids = data.get_table_ids()
+	numeric_labels = data.get_numeric_labels()
 	
+	labels_with = []
+	numeric_labels_with = []
+	images_binary_with = []
+	table_ids_with = []
+	
+	labels_without = []
+	numeric_labels_without = []
+	images_binary_without = []
+	table_ids_without = []
+	
+	for i in range(len(labels)):
+		if labels[i] == None:
+			labels_without.append(labels[i])
+			numeric_labels_without.append(numeric_labels[i])
+			images_binary_without.append(images_binary[i])
+			table_ids_without.append(table_ids[i])
+		else:
+			labels_with.append(labels[i])
+			numeric_labels_with.append(numeric_labels[i])
+			images_binary_with.append(images_binary[i])
+			table_ids_with.append(table_ids[i])
+	
+	data_with_labels.set_labels(labels_with)
+	data_with_labels.set_numeric_labels(numeric_labels_with)
+	data_with_labels.set_table_ids(table_ids_with)
+	data_with_labels.set_images_binary(images_binary_with)
+	
+	
+	data_without_labels.set_labels(labels_without)
+	data_without_labels.set_numeric_labels(numeric_labels_without)
+	data_without_labels.set_table_ids(table_ids_without)
+	data_without_labels.set_images_binary(images_binary_without)
+	
+	return data_with_labels, data_without_labels 

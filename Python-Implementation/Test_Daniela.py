@@ -92,7 +92,7 @@ def classifying_data_NN():
 	D = read_kaggle_training_table(train_kaggle_table)
 	print "original length ", D.get_length()
 	D_training, D_testing = split_data(D, 0.80)
-	print "training length ", D_testing.get_length()
+	print "training length ", D_training.get_length()
 	print "testing length ", D_testing.get_length()
 	
 	feature_vectors_training = D_training.get_feature_vectors()
@@ -232,13 +232,14 @@ def calculate_accuracy():
 	print len(labels)
 	print len(label_to_number)
 
-def testing_read_kaggle_test_table():
-	D = read_kaggle_test_table()
-	print str(D)
 
-def testing_Data():
-	D = Data()
-	print str(D)
+def testing_split_data_by_labels():
+	D = read_all_kaggle_gray_scale_images()
+	data_training, data_testing = split_data_by_labels(D)
+	print str(data_training) + '\n'
+	print str(data_testing)
+	
+
 #--------------------- Calling functions --------------------------
 
 #testing_split_data_function()
@@ -256,5 +257,4 @@ def testing_Data():
 #testing_NN_with_less_features()
 #testing_NN_hardcoded_data()
 #calculate_accuracy()
-#testing_read_kaggle_test_table()
-#testing_Data()
+#testing_split_data_by_labels()
