@@ -4,6 +4,8 @@ from Data import *
 from FeatureExtractors import *
 from Classifiers import *
 
+
+
 def test_reading_table():
 	test_table_data = read_kaggle_test_table(test_kaggle_table)
 	
@@ -29,5 +31,10 @@ def test_read_all_images():
 	print data.get_images_binary()[0]
 	print data.get_labels()
 
+def test_edge_detector():
+	#set_printoptions(threshold=nan)
+	print get_edge_points(read_image_grayscale(sample_binary_image))
+
 #test_reading_table()
-test_read_all_images()	
+#test_read_all_images()
+test_edge_detector()	

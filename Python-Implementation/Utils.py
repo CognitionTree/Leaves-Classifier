@@ -11,6 +11,7 @@ from numpy import *
 from Data import *
 from glob import *
 import cv2
+from PIL import Image
 
 #---------------------------------------Variables----------------------------------------
 test_kaggle_table = 'Data/Dataset1/data_binary_Kaggle/test.csv'
@@ -19,7 +20,7 @@ train_kaggle_table = 'Data/Dataset1/data_binary_Kaggle/train.csv'
 
 kaggle_images_path = 'Data/Dataset1/data_binary_Kaggle' 
 
-
+sample_binary_image = 'Data/Dataset1/data_binary_Kaggle/370.jpg'
 #---------------------------------------Math Tools---------------------------------------
 #Notice: Since we started using numpy arrays instead of dictionaries to represent vectors
 #		 some of these functions are to simple to even be considered. However since they
@@ -62,7 +63,21 @@ def norm(v):
 
 #-------------------------------------Image Processing Tools-----------------------------
 
+def display_image(img):
+	cv2.imshow('Image', im)
+	cv2.waitKey(0)
+	cv2.destroyAllWindows()	
 
+def get_edge_points(img):
+	edges = []
+	canny_image = cv2.Canny(img, 100, 200)
+
+	for i in range(len(canny_image)):
+		for j in range(len(canny_image[0])):
+			if canny_image[i][j] == 255:
+				edges.append((i,j))
+	
+	return edges
 
 
 
