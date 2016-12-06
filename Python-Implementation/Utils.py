@@ -44,7 +44,7 @@ label_to_number = {'Populus_Nigra': 69, 'Acer_Saccharinum': 41, 'Quercus_Pontica
 'Arundinaria_Simonii': 23, 'Pterocarya_Stenoptera': 1, 'Quercus_Canariensis': 6, \
 'Alnus_Rubra': 30, 'Quercus_Cerris': 64, 'Quercus_Ellipsoidalis': 89, \
 'Quercus_Palustris': 54, 'Quercus_Ilex': 22, 'Prunus_X_Shmittii': 42, \
-'Quercus_Coccinea': 63, 'Quercus_Variabilis': 4, 'Lithocarpus_Edulis': 77, \	
+'Quercus_Coccinea': 63, 'Quercus_Variabilis': 4, 'Lithocarpus_Edulis': 77, \
 'Quercus_x_Hispanica': 90, 'Magnolia_Salicifolia': 5, 'Phildelphus': 16, \
 'Acer_Platanoids': 24, 'Tilia_Platyphyllos': 67, 'Acer_Palmatum': 17, \
 'Eucalyptus_Glaucescens': 31, 'Ilex_Cornuta': 47, 'Betula_Pendula': 87, \
@@ -151,6 +151,7 @@ def read_kaggle_test_table(table_path = test_kaggle_table):
 	feature_vectors = []
 	ids = []
 	(feature_names, feature_vectors_str) = read_excel_table(table_path)
+	feature_names = feature_names[1:len(feature_names)]
 	
 	for row in feature_vectors_str:
 		ids = ids+row[0:1]
@@ -171,6 +172,7 @@ def read_kaggle_training_table(table_path = train_kaggle_table):
 	ids = []
 	numeric_labels = []
 	(feature_names, feature_vectors_str) = read_excel_table(table_path)
+	feature_names = feature_names[2:len(feature_names)]
 
 	for row in feature_vectors_str:
 		labels.append(row[1])
