@@ -98,7 +98,7 @@ def norm(v):
 #-------------------------------------Image Processing Tools-----------------------------
 
 def display_image(img):
-	cv2.imshow('Image', im)
+	cv2.imshow('Image', img)
 	cv2.waitKey(0)
 	cv2.destroyAllWindows()	
 
@@ -113,7 +113,17 @@ def get_edge_points(img):
 	
 	return edges
 
-
+def get_corner_points(img, maxFeat):
+	
+	feature_params = dict( maxCorners = maxFeat, qualityLevel = 0.3, minDistance = 7, blockSize = 7 )
+	corners = cv2.goodFeaturesToTrack(img, mask = None, **feature_params)
+	return corners
+	
+	'''
+	for point in corners:
+		x, y = point.ravel()
+	'''
+	
 
 
 #-------------------------------------File System Processing Tools-----------------------

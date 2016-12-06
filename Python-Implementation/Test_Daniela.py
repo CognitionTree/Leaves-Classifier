@@ -73,14 +73,80 @@ def classifying_data_SVC():
 	clf.train()
 	clf.predict()
 	
-	predictions = D_testing.get_predictions()
-	print predictions
+	#predictions = D_testing.get_predictions()
+	
+	S = Statistics(D_testing)
+	
+	#print "matrix: "
+	#print S.get_confusion_matrix()
+	#print "accuracy ", S.get_accuracy()
 	
 	
 	#print str(D)
 	#print labels
 	#print feature_vectors
+
+def classifying_data_NN():
+	D = read_kaggle_training_table(train_kaggle_table)
+	D_training, D_testing = split_data(D, 0.80)
 	
+	feature_vectors_training = D_training.get_feature_vectors()
+	labels_training = D_training.get_labels()
+	feature_vectors_testing = D_testing.get_feature_vectors()
+	labels_testing = D_testing.get_labels()
+	
+	clf = NN_Classifier()
+	clf.set_training_data(D_training)
+	clf.set_testing_data(D_testing)
+	
+	clf.train()
+	clf.predict()
+	
+	#predictions = D_testing.get_predictions()
+	
+	S = Statistics(D_testing)
+
+
+def testing_data_features():
+	D = read_kaggle_training_table(train_kaggle_table)
+	
+	feature_vectors = D.get_feature_vectors()
+	labels = D.get_labels()
+	table_ids = D.get_table_ids()
+	feature_names = D.get_feature_names()
+	
+	print "Feature names: "
+	print feature_names
+	print len(feature_names)
+	
+	print "Feature vectors position 5:"
+	print feature_vectors[10]
+	print len(feature_vectors[10])
+	
+	print "label"
+	print labels[10]
+	print len(labels[10])
+	
+	print "table_ids"
+	print table_ids[10]
+	
+	
+def testing_classifier_hu_moments():
+	D = read_all_kaggle_gray_scale_images()
+	D_no_labels, D_labels = split_data_by_labels(D)
+	
+	#images_binary = D.get_images_binary()
+	#table_ids = D.get_table_ids()
+	#labels = D.get_labels()
+	#numeric_labels = D.get_numeric_labels()
+	
+	
+def testing_get_corner_points():
+	img = read_image_grayscale("1.jpg")
+	corners = get_corner_points(img, 100)
+	
+	
+		
 #--------------------- Calling functions --------------------------
 
 #testing_split_data_function()
@@ -89,5 +155,9 @@ def classifying_data_SVC():
 #testing_statistics()
 #testing_hu_moments_feature_extractor()
 #testing_Data()
-classifying_data_SVC()
+#classifying_data_SVC()
+#classifying_data_NN()
 #testing_showing_image()
+#testing_data_features()
+#testing_classifier_hu_moments()
+testing_get_corner_points()
