@@ -14,6 +14,24 @@ General template:
 
 class Feature_Extractors:
 
+	def moments_feature_extractor(self, image):
+		moments = get_moments(image)
+		
+		feature_names = []
+		feature_moments = []
+
+		for label in moments:
+			feature_names.append(label)
+			feature_moments.append(moments[label])		
+		
+
+		return (array(feature_names), array(feature_moments))
+
+	
+	def solidity_feature_extractor(self, image):
+		solidity = get_solidity(image)
+		return (array(['solidity']), array([solidity]))
+
 	def hu_momments_feature_extractor(self, image):
 		feature_names = array(['hu1', 'hu2','hu3', 'hu4','hu5', 'hu6','hu7'])
 		moments = cv2.moments(image)
