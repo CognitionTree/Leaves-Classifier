@@ -41,7 +41,7 @@ class SVC_Classifier(Classifier):
 		self.clf = svm.SVC()
 		
 		#parameters
-		self.kernel = 'rbf'
+		self.kernel = 'linear'
 		self.degree = 3
 		self.verbose = False
 		self.C = 1.0
@@ -105,10 +105,10 @@ class NN_Classifier(Classifier):
 		self.beta_2=0.999
 		self.early_stopping=False
 		self.epsilon=1e-08
-		self.hidden_layer_sizes=(5, 2)
+		self.hidden_layer_sizes=(5,2)
 		self.learning_rate='constant'
 		self.learning_rate_init=0.001
-		self.max_iter=200
+		self.max_iter=-1
 		self.momentum=0.9
 		self.nesterovs_momentum = True
 		self.power_t = 0.5
