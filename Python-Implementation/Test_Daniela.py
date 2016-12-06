@@ -20,9 +20,16 @@ def testing_str_data():
 	data = str(D)
 	print data
 
-
+def testing_statistics():
+	D = Data()
+	S = Statistics(D)
+	accuracy = S.get_accuracy()
+	print accuracy
+	
+	
 #--------------------- Calling functions --------------------------
 
 #testing_split_data_function()
 #testing_SVC_classifier()
 #testing_str_data()
+testing_statistics()

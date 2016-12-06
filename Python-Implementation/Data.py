@@ -89,6 +89,53 @@ class Data:
 		
 		return string
 
+
+
+
+class Statistics:
+
+	def __init__(self, data):
+		self.labels = data.get_labels()
+		self.predictions = data.get_predictions()
+		self.length = data.get_length()
+		self.calculate_confusion_matrix()
+		self.calculate_accuracy()
+		
+	#confusion_matrix is a dictionary with keys = (label, prediction)
+	def calculate_confusion_matrix(self):
+		self.confusion_matrix = {}
+						
+		for i in range(len(self.labels)):
+			for j in range(len(self.predictions)):
+				if (self.labels[i],self.predictions[j]) not in self.confusion_matrix:
+					self.confusion_matrix[(self.labels[i],self.predictions[j])] = 1
+				else:
+					self.confusion_matrix[(self.labels[i],self.predictions[j])] += 1
+		
+	
+	def get_confusion_matrix(self):
+		return self.confusion_matrix
+	
+	#TODO: calculate accuracy in terms of TP, TN, etc once those are found.
+	def calculate_accuracy(self):
+		total = 0
+		self.accuracy = 0
+		for (label, prediction) in self.confusion_matrix:
+			total += self.confusion_matrix[(label, prediction)]
+			if label == prediction:
+				self.accuracy += self.confusion_matrix[(label, prediction)]
+		
+		if total == 0:
+			total = 0.00001
+		self.accuracy = 1.0* self.accuracy / total
+	
+	def get_accuracy(self):
+		return self.accuracy
+		
+		
+		
+
+
 # ---------------------------Useful functions related to Data ---------------------------
 
 # Split Data instance into data_training and data_testing, given a percentage for training
