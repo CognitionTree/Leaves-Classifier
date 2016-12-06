@@ -52,19 +52,24 @@ def test_build_excel_table():
 	file_name = 'text_excel'
 	build_excel_file(rows, file_name, headers)
 
+def test_solidity_extractor():
+	fe = Feature_Extractors()
+
+	print '367:' + str(fe.solidity_feature_extractor(read_image_grayscale(sample_binary_image_367)))
+	print '455:' + str(fe.corner_ratio_feature_extractor(read_image_grayscale(sample_binary_image_455)))
+	print '-----------------------------------------'
+	print '317:' + str(fe.solidity_feature_extractor(read_image_grayscale(sample_binary_image_317)))
+	print '1:' + str(fe.solidity_feature_extractor(read_image_grayscale(sample_binary_image_1)))
+	print '-----------------------------------------'
+	print '2:' + str(fe.solidity_feature_extractor(read_image_grayscale(sample_binary_image_2)))
+	print '431:' + str(fe.solidity_feature_extractor(read_image_grayscale(sample_binary_image_431)))
+	print '762:' + str(fe.solidity_feature_extractor(read_image_grayscale(sample_binary_image_762)))
+	print '-------------------------------------------------------'
+	print '5:' + str(fe.solidity_feature_extractor(read_image_grayscale(sample_binary_image_5)))
+	print '50:' + str(fe.solidity_feature_extractor(read_image_grayscale(sample_binary_image_50)))
+
 def test_length_width_ratio_feature_extractor():
 	fe = Feature_Extractors()
-	'''
-	sample_binary_image_367 = 'Data/Dataset1/data_binary_Kaggle/367.jpg'
-	sample_binary_image_455 = 'Data/Dataset1/data_binary_Kaggle/455.jpg'
-
-	sample_binary_image_1 = 'Data/Dataset1/data_binary_Kaggle/1.jpg'
-	sample_binary_image_317 = 'Data/Dataset1/data_binary_Kaggle/317.jpg'
-
-	sample_binary_image_2 = 'Data/Dataset1/data_binary_Kaggle/2.jpg'
-	sample_binary_image_431 = 'Data/Dataset1/data_binary_Kaggle/431.jpg'
-	'''
-
 
 	print '367:' + str(fe.corner_ratio_feature_extractor(read_image_grayscale(sample_binary_image_367)))
 	print '455:' + str(fe.corner_ratio_feature_extractor(read_image_grayscale(sample_binary_image_455)))
@@ -79,10 +84,28 @@ def test_length_width_ratio_feature_extractor():
 	print '5:' + str(fe.corner_ratio_feature_extractor(read_image_grayscale(sample_binary_image_5)))
 	print '50:' + str(fe.corner_ratio_feature_extractor(read_image_grayscale(sample_binary_image_50)))
 
+def test_moments_feature_extractor():
+	fe = Feature_Extractors()
+
+	print '367:' + str(fe.moments_feature_extractor(read_image_grayscale(sample_binary_image_367)))
+	print '455:' + str(fe.moments_feature_extractor(read_image_grayscale(sample_binary_image_455)))
+	print '-----------------------------------------'
+	print '317:' + str(fe.moments_feature_extractor(read_image_grayscale(sample_binary_image_317)))
+	print '1:' + str(fe.moments_feature_extractor(read_image_grayscale(sample_binary_image_1)))
+	print '-----------------------------------------'
+	print '2:' + str(fe.moments_feature_extractor(read_image_grayscale(sample_binary_image_2)))
+	print '431:' + str(fe.moments_feature_extractor(read_image_grayscale(sample_binary_image_431)))
+	print '762:' + str(fe.moments_feature_extractor(read_image_grayscale(sample_binary_image_762)))
+	print '-------------------------------------------------------'
+	print '5:' + str(fe.moments_feature_extractor(read_image_grayscale(sample_binary_image_5)))
+	print '50:' + str(fe.moments_feature_extractor(read_image_grayscale(sample_binary_image_50)))
+
 #test_reading_table()
 #test_read_all_images()
 #test_edge_detector()
 #test_binary()
 #test_binary_countours()
 #test_build_excel_table()
-test_length_width_ratio_feature_extractor()	
+#test_length_width_ratio_feature_extractor()
+#test_solidity_extractor()
+test_moments_feature_extractor()	

@@ -112,6 +112,26 @@ def norm(v):
 
 #-------------------------------------Image Processing Tools-----------------------------
 
+def get_cnt(img):
+	ret,thresh = cv2.threshold(img,127,255,0)
+	contours,hierarchy = cv2.findContours(thresh, 1, 2)
+
+	cnt = contours[0]
+	return cnt
+
+def get_moments(img):
+	return cv2.moments(get_cnt(img))
+
+def get_solidity(img):
+	cnt = get_cnt(img)
+	area = cv2.contourArea(cnt)
+	hull = cv2.convexHull(cnt)
+	hull_area = cv2.contourArea(hull)
+	solidity = float(area)/hull_area
+
+	return solidity
+
+
 def max_x_diff(img):
 	edge_points = get_edge_points(img)
 
