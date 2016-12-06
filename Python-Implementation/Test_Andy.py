@@ -34,7 +34,7 @@ def test_read_all_images():
 
 def test_edge_detector():
 	#set_printoptions(threshold=nan)
-	print get_edge_points(read_image_grayscale(sample_binary_image))
+	print get_edge_points(read_image_grayscale(sample_binary_image_1))
 
 def test_binary_countours():
 	#set_printoptions(threshold=nan)
@@ -52,9 +52,33 @@ def test_build_excel_table():
 	file_name = 'text_excel'
 	build_excel_file(rows, file_name, headers)
 
+def test_length_width_ratio_feature_extractor():
+	fe = Feature_Extractors()
+	'''
+	sample_binary_image_367 = 'Data/Dataset1/data_binary_Kaggle/367.jpg'
+	sample_binary_image_455 = 'Data/Dataset1/data_binary_Kaggle/455.jpg'
+
+	sample_binary_image_1 = 'Data/Dataset1/data_binary_Kaggle/1.jpg'
+	sample_binary_image_317 = 'Data/Dataset1/data_binary_Kaggle/317.jpg'
+
+	sample_binary_image_2 = 'Data/Dataset1/data_binary_Kaggle/2.jpg'
+	sample_binary_image_431 = 'Data/Dataset1/data_binary_Kaggle/431.jpg'
+	'''
+
+
+	print '367:' + str(fe.corner_ratio_feature_extractor(read_image_grayscale(sample_binary_image_367)))
+	print '455:' + str(fe.corner_ratio_feature_extractor(read_image_grayscale(sample_binary_image_455)))
+	print '-----------------------------------------'
+	print '317:' + str(fe.corner_ratio_feature_extractor(read_image_grayscale(sample_binary_image_317)))
+	print '1:' + str(fe.corner_ratio_feature_extractor(read_image_grayscale(sample_binary_image_1)))
+	print '-----------------------------------------'
+	print '2:' + str(fe.corner_ratio_feature_extractor(read_image_grayscale(sample_binary_image_2)))
+	print '431:' + str(fe.corner_ratio_feature_extractor(read_image_grayscale(sample_binary_image_431)))
+
 #test_reading_table()
 #test_read_all_images()
 #test_edge_detector()
 #test_binary()
 #test_binary_countours()
-test_build_excel_table()	
+#test_build_excel_table()
+test_length_width_ratio_feature_extractor()	
