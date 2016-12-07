@@ -111,6 +111,18 @@ class Feature_Extractors:
 		
 		return (feature_names, features)
 	
+	def all_five_feature_extractor(self, image):
+		(feature_names1, features1) = self.corner_count_feature_extractor(image)
+		(feature_names2, features2) = self.length_width_ratio_feature_extractor(image)
+		(feature_names3, features3) = self.perimeter_area_ratio_feature_extractor(image)
+		(feature_names4, features4) = self.ratio_of_areas_feature_extractor(image)
+		(feature_names5, features5) = self.solidity_feature_extractor(image)
+		
+		features = array(list(features1)+list(features2)+list(features3)+list(features4)+list(features5))
+		feature_names = array(list(feature_names1)+list(feature_names2)+list(feature_names4)+list(feature_names4)+list(feature_names5))
+		
+		return (feature_names, features)
+	
 	def all_feature_extractor(self, image):
 		(feature_names1, features1) = self.corner_count_feature_extractor(image)
 		(feature_names2, features2) = self.length_width_ratio_feature_extractor(image)

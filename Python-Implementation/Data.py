@@ -109,8 +109,6 @@ class Statistics:
 		self.label_to_number = label_to_number
 		self.calculate_confusion_matrix()
 		self.calculate_accuracy()
-			
-	
 	
 	def calculate_confusion_matrix(self):
 		self.confusion_matrix = {}
@@ -132,12 +130,13 @@ class Statistics:
 		
 		if total == 0:
 			total = 0.00001
-		print "total ", total, self.length
-		print self.accuracy
 		self.accuracy = 1.0* self.accuracy / total
-		print self.accuracy
-			
+		
+	
+	def get_statistics(self):
+		return {'Accuracy': self.accuracy}
 
+	
 # ---------------------------Useful functions related to Data ---------------------------
 
 # Split Data instance into data_training and data_testing, given a percentage for training

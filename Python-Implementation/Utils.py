@@ -5,7 +5,7 @@ Author: Andy D. Martinez & Daniela Florit
 Date created: 11/06/2016
 Python Version: 2.7.12
 '''
-
+import scipy.misc
 from math import *
 from numpy import *
 from Data import *
@@ -41,6 +41,10 @@ sample_color_image_2 = 'Data/Google_Images/2.jpg'
 sample_color_image_3 = 'Data/Google_Images/3.jpg'
 
 colors = {'Rhododendron':'black', 'Zelkova':'dimgrey', 'Prunus':'darkgrey', 'Magnolia':'lightgray', 'Castanea':'rosybrown', 'Liriodendron':'lightcoral', 'Phildelphus':'maroon', 'Morus':'red', 'Crataegus':'salmon', 'Sorbus':'orangered', 'Lithocarpus':'sienna', 'Alnus':'saddlebrown', 'Populus':'palevioletred', 'Arundinaria':'pink', 'Ulmus':'magenta', 'Ginkgo':'m', 'Callicarpa':'purple', 'Ilex':'darkmagenta', 'Betula':'b', 'Eucalyptus':'navy', 'Viburnum':'royalblue', 'Cornus':'skyblue', 'Pterocarya':'steelblue', 'Cercis':'aqua', 'Cotinus':'c', 'Celtis':'teal', 'Tilia':'green', 'Olea':'lime', 'Fagus':'seagreen', 'Quercus':'sage', 'Liquidambar':'y', 'Salix':'khaki', 'Cytisus':'chartreuse', 'Acer':'yellow'}
+
+
+genus_to_number = {'Rhododendron':0, 'Zelkova':1, 'Prunus':2, 'Magnolia':3, 'Castanea':4, 'Liriodendron':5, 'Phildelphus':6, 'Morus':7, 'Crataegus':8, 'Sorbus':9, 'Lithocarpus':10, 'Alnus':11, 'Populus':12, 'Arundinaria':13, 'Ulmus':14, 'Ginkgo':15, 'Callicarpa':16, 'Ilex':17, 'Betula':18, 'Eucalyptus':19, 'Viburnum':20, 'Cornus':21, 'Pterocarya':22, 'Cercis':23, 'Cotinus':24, 'Celtis':25, 'Tilia':26, 'Olea':27, 'Fagus':28, 'Quercus':29, 'Liquidambar':30, 'Salix':31, 'Cytisus':32, 'Acer':33}
+
 
 label_to_number = {'Populus_Nigra': 69, 'Acer_Saccharinum': 41, 'Quercus_Pontica': 12, \
 'Alnus_Viridis': 86, 'Olea_Europaea': 88, 'Acer_Rufinerve': 58, 'Acer_Rubrum': 79, \
@@ -129,6 +133,8 @@ def plot_points(xs, ys, labels, filename=None):
 		plt.savefig(filename+'png')
 
 #-------------------------------------Image Processing Tools-----------------------------
+def save_image(arr, name):
+	scipy.misc.imsave(name, arr)	
 
 def get_cnt(img):
 	ret,thresh = cv2.threshold(img,127,255,0)
@@ -283,6 +289,8 @@ def read_excel_table(table_path):
 	for line in f:
 		line = line.replace('\n', '')
 		splited_line = line.split(',')
+		splited_line = filter(lambda a: a != '', splited_line)
+		splited_line = filter(lambda a: a != '\r', splited_line)
 	
 		if len(headers) == 0:
 			headers = splited_line
@@ -316,7 +324,7 @@ def read_kaggle_test_table(table_path = test_kaggle_table):
 	return data
 
 #Remember that Column 2 contains the classification of the feature vector
-def read_kaggle_training_table(table_path = train_kaggle_table):
+def read_kaggle_training_table(table_path = train_kaggle_table, to_number=None):
 	data = Data()
 	feature_vectors = []
 	labels = []
@@ -327,7 +335,10 @@ def read_kaggle_training_table(table_path = train_kaggle_table):
 
 	for row in feature_vectors_str:
 		labels.append(row[1])
-		numeric_labels.append(label_to_number[row[1]])
+		if to_number == None:
+			numeric_labels.append(label_to_number[row[1]])
+		else:
+			numeric_labels.append(to_number[row[1]])
 		ids.append(row[0])
 		row = row[2:len(row)]
 		
@@ -423,11 +434,13 @@ def read_all_grayscale_images(images_directory_path):
 	files = glob(images_directory_path+'/*.jpg')
 	images = []	
 	data = Data()
+	ids = []
 
 	for f in files:
 		images.append(read_image_grayscale(f))
-	
+		ids.append(f)
 
 	data.set_images_binary(array(images))
+	data.set_table_ids(array(ids))
 	return data
 	
